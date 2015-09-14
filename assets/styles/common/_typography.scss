@@ -1,0 +1,101 @@
+// Font Definition
+@font-face{
+	font-family: "Libertine";
+	src: url('#{$path-font}/LinLibertine_Rah.ttf');
+}
+@font-face{
+	font-family: "Trajan Pro";
+	src: url('#{$path-font}/TrajanPro-Regular.otf');
+}
+
+@font-face {
+  font-family: 'fontello';
+  src: url('#{$path-font}/fontello.eot');
+  src: url('#{$path-font}/fontello.eot#iefix') format('embedded-opentype'),
+       url('#{$path-font}/fontello.woff') format('woff'),
+       url('#{$path-font}/fontello.ttf') format('truetype'),
+       url('#{$path-font}/fontello.svg#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: $base-font-family;
+  line-height: $base-line-height;
+  transition: 0.1s font-size;
+  @media (min-width: $view-intermediate) {
+    font-size: ($base-font-size * 1.4);
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $heading-font-family;
+  line-height: $heading-line-height;
+  margin: 0 0 $small-spacing;
+}
+
+h1 {
+  font-size: ($base-font-size * 2);
+}
+h2 {
+  font-size: ($base-font-size * 1.8);
+}
+h3 {
+  font-size: ($base-font-size * 1.6);
+}
+h4 {
+  font-size: ($base-font-size * 1.4);
+}
+h5 {
+  font-size: ($base-font-size * 1.2);
+}
+h6 {
+  font-size: ($base-font-size * 1);
+}
+
+p {
+  margin: 0 0 $small-spacing;
+}
+
+a {
+  color: $action-color;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  font-weight: $bold;
+
+  &:active,
+  &:focus,
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+hr {
+//  border-bottom: $thin-border;
+//  border-left: none;
+//  border-right: none;
+//  border-top: none;
+  @include fancyborder;
+  margin: $base-spacing 0;
+}
+
+img,
+.picture {
+  margin: 0;
+  max-width: 100%;
+}
+
+.screen-reader-text {
+  display: none;
+}

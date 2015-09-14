@@ -1,0 +1,94 @@
+// Custom social icons
+$social:
+    ("facebook.com", #3b5998, "f"),
+    ("fb.me", #3b5998, "f"),
+    ("flickr", #0063db, "F"),
+    ("plus.google", #dd4b39, "G"),
+    ("instagr", #517fa4, "i"),
+    ("linked", #007bb6, "L"),
+    ("pinterest", #cb2027, "P"),
+    ("pin.st", #cb2027, "P"),
+    ("feed", #f26522, "r"),
+    ("tumblr", #35465c, "+"),
+    ("tmblr", #35465c, "+"),
+    ("twitter", #00aced, "T"),
+    ("t.co", #00aced, "T"),
+    ("vimeo", #aad450, "v"),
+    ("vine", #00bf8f, "V"),
+    ("yelp", #af0606, "Y"),
+    ("youtube", #b00, "y"),
+    ("y2u.be", #b00, "y"),
+    ("youtu.be", #b00, "y")
+;
+
+// These social icons don't like having a square backing (default)
+// They get an outline equal to the value of their key, and remove the default backing.
+// outline($width: 2, $color: white) 
+// Outline a bit of text by $width in $color 
+$special-social:(
+    "youtube": 1,
+    "youtu.be": 1,
+    "y2u.be": 1,
+    "yelp": 1,
+    "feed": 1,
+    "vine": 1,
+    "tumblr": 1,
+    "tmblr":1
+);
+
+
+#menu-social{
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+    @media only screen and (min-width: $view-intermediate){
+        height: 122px;
+        float: right; 
+        width: 48%;
+        text-align: right;
+    }
+    li {display: inline;}
+    a { 
+        display: inline;
+        position: relative;
+        font:{
+            family: $icon-font;
+            size: 31px;
+            weight: normal;
+        }
+        &:active,
+        &:focus,
+        &:hover {
+            opacity: 1;
+        }
+        // default: white round-rect background
+        &:hover:after{
+            content: " ";
+            background-color: white;
+            position: absolute;
+            right: 0px;
+            bottom: 3px;
+            width: 25.5px;
+            height: 25.5px;
+            border-radius: 5px;
+        }
+        &:hover:before{
+            position: absolute;
+            z-index: 1;
+        }    
+        @each $platform, $soc-color, $fontello-icon, $outline in $social{
+            &[href*="#{$platform}"]:hover:before{
+                content:$fontello-icon; color: $soc-color;
+                @if map-has-key($special-social, $platform){
+                text-shadow: #{outline(map-get($special-social,$platform))};
+                }
+            }
+            @if map-has-key($special-social, $platform){
+                &[href*="#{$platform}"]:hover:after{
+                    display:none;
+                }
+            }
+        }
+        
+    }
+}

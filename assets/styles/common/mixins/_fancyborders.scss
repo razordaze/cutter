@@ -1,0 +1,27 @@
+// Project specific mixins
+@mixin fancyborder {
+    position: relative;
+    border: {
+    	width: 5px;
+    	bottom: 0;
+    	style: double;
+    	color: $color-thin-border;
+    }
+    border-bottom: 5px solid $color-trim;
+}
+
+@mixin fancyborder-container($side: top, $thick: $color-trim, $thin: $color-thin-border){
+    border-width: 0;
+    border-#{$side}: 20px solid $thick;
+    position: relative;
+    @media only screen and (min-width: $view-intermediate) {
+	    &:after{
+	        content:"";
+	        position:absolute;
+	        border-#{opposite($side)}: 5px double $thin;
+	        width: 100%;
+	        #{$side}:-3px;
+	        left:0;
+	    }
+	}
+}

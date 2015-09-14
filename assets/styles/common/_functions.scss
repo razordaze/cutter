@@ -1,0 +1,65 @@
+// General Use
+
+
+// Outline a bit of text by $width in $color 
+@function outline($width: 1, $color: white){
+    $outline: #{$color} #{$width}px #{$width}px 0;
+    @for $w from -$width to $width + 1{
+        @for $h from -$width to $width + 1{
+            $outline: "#{$outline} , #{$color} #{$w}px #{$h}px 0";
+        }
+    }
+    @return unquote($outline);
+}
+
+// Return a color distinct & complementary to given color
+@function emphasize($color){
+  @if (lightness($color) > 50) {
+    @return darken($color, 20%);}
+  @else {
+    @return lighten($color, 20%);}
+}
+
+@function opposite($directions) {
+  $opposite-directions: ();
+  $direction-map: (
+          'top':    'bottom',
+          'right':  'left',
+          'bottom': 'top',
+          'left':   'right',
+          'center': 'center',
+          'ltr':    'rtl',
+          'rtl':    'ltr',
+  );
+
+  @each $direction in $directions {
+    $direction: to-lower-case($direction);
+    
+    @if map-has-key($direction-map, $direction) { 
+      $opposite-directions: append($opposite-directions, unquote(map-get($direction-map, $direction)));
+    } @else {
+      @warn "No opposite direction can be found for `#{$direction}`. Direction omitted.";
+    }
+  }
+ 
+  @return $opposite-directions;
+}
+
+@function other-directions($direction) {
+  $to-index: str-index($direction, to);
+  @if $to-index {
+    @return unquote("to ") + opposite(str-slice($direction, 3));
+  }
+  @else {
+    @return $direction + 90;
+  }
+}
+
+// Return the best contrasting overlay.
+@function background-texture($color) {
+  @if (lightness($color) > 50) {
+    @return $overlay-light; // Lighter backgorund
+  } @else {
+    @return $overlay-dark; // Darker background
+  }
+}

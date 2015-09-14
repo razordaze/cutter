@@ -1,0 +1,103 @@
+// Select white or black text, whichever contrasts best.
+@function contrast-txt($color) {
+  @if (lightness($color) > 50) {
+    @return #000000; // Lighter backgorund, return dark color
+  } @else {
+    @return #ffffff; // Darker background, return light color
+  }
+}
+
+// Palette Generator
+//
+// paletteTest.html currently supports two to ten colors
+//
+// 1. Define palette from which to generate a palette diff
+// (this is the default diff map)
+//  $base-palette: (
+//    'base': #195319,
+//    'colors': 
+	// original nav-palette (defined the static palette diffs)
+	// tetrad of #195319 (current aside color)
+	// #133E3E, // teal
+	// #681F1F, // red
+	// #ec6b00, // more bright / saturated #68401F, // brown
+	// tetrad squared gets 2 more colors:
+	// #1A2745, // dk blue
+	// #e29800  // more bright / saturated #68501F, // lt brown / gold
+//  ) !default;
+
+// 2. get the diff map of the base palette
+//  $palette-diff: palette-diff($base-palette);
+
+// 3. generate new palette from base color + new diff map 
+// (or omit for to use default)
+// $palette: palette(#195319);
+
+// return the diff between two given colors
+@function color-diff($a, $b) {
+  $sat: saturation($a) - saturation($b);
+  $lig: lightness($a) - lightness($b);
+  $fn-sat: if($sat > 0, 'desaturate', 'saturate');
+  $fn-lig: if($lig > 0, 'darken', 'lighten');
+ 
+  @return (
+    adjust-hue: -(hue($a) - hue($b)),
+    #{$fn-sat}: abs($sat),
+    #{$fn-lig}: abs($lig)
+  );
+}
+
+// return a diff map for a given palette
+@function palette-diff($palette) {
+  $base: map-get($palette, 'base');
+  $colors: map-get($palette, 'colors');
+  $diffs: ();
+ 
+  @each $color in $colors {
+    $diffs: append($diffs, color-diff($base, $color));
+  }
+ 
+  @return $diffs;
+}
+
+$palette-diff-default:(
+  (adjust-hue: 0deg, saturate: 0%, lighten: 0%)
+  (adjust-hue: -92.79661deg, saturate: 46.2963%, lighten: 25.09804%) 
+  (adjust-hue: -120deg, saturate: 0.37037%, lighten: 5.29412%)
+  (adjust-hue: 60deg, desaturate: 0.61728%, darken: 5.29412%) 
+  (adjust-hue: -79.64602deg, saturate: 46.2963%, lighten: 23.13725%)
+  (adjust-hue: 101.86047deg, desaturate: 8.44055%, darken: 2.54902%) 
+);
+
+// apply a diff to a color, return the modified color
+@function apply-diff($color, $diff) {
+  @each $function, $value in $diff {
+    $color: call($function, $color, $value);
+  }
+ 
+  @return $color;
+}
+
+// create a palette starting with a new base color and applying a map of diffs
+@function create-palette($base-color, $palette-diff) {
+  $palette: ();
+ 
+  @each $diff in $palette-diff {
+    $palette: append($palette, apply-diff($base-color, $diff));
+  }
+
+  @return $palette;
+}
+
+// create a new palette map (first key is base, the rest by number)
+// by applying the $palette-diff map to the $base-color
+@function palette($base-color, $palette-diff: $palette-diff-default) {
+  $colors: create-palette($base-color, $palette-diff);
+  $palette: ();
+  $init: (base: $base-color);
+  $palette: map-merge($palette, $init);
+  @for $i from 2 through min(length($colors)) {
+    $palette: map-merge($palette, (($i - 1): nth($colors, $i)));
+  }
+  @return $palette;
+}

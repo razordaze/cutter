@@ -1,0 +1,133 @@
+// Brown Paper Tickets Calendar Classes:
+
+//The entire calendar container.
+//div.bpt-calendar-widget, div.bpt-calendar-shortcode	{}
+
+//The calendar controls wrapper.
+//div.bpt-calendar-widget-controls {}	
+
+// The calendar controls month.
+div.bpt-calendar-widget-controls-month,
+//The calendar controls buttons.
+div.bpt-calendar-widget-controls-button	{
+	font:{
+		weight: normal;
+		size: 2em; 
+	}
+	line-height: 1.5em;
+}
+// Today
+.bpt-calendar-widget td.today{
+	background:   map-get($nav-palette,3);
+	border: 1px solid map-get($nav-palette,3);
+	color: contrast-txt(map-get($nav-palette,3));
+}
+// Event Day
+.bpt-calendar-widget td.event{
+	background:   map-get($nav-palette,1);
+	border: 1px solid map-get($nav-palette,1);
+	color: contrast-txt(map-get($nav-palette,1));
+}
+// Selected Day
+.bpt-calendar-widget td.bpt-calendar-selected-day{
+	background:   map-get($nav-palette,2);
+	border: 1px solid map-get($nav-palette,2);
+	color: contrast-txt(map-get($nav-palette,2));
+}
+
+
+// The event details box (expands out when selected day has events)
+div#bpt-calendar-widget-event-view{
+	background-color: rgba($color-trim,0.8);
+	padding: 10px 10px 0px 10px;
+	h1{// Hide the redundant date
+		font-size: 0em;
+	}
+	h2{
+		margin: 0;
+		text-shadow: 1px 1px 2px black;
+	}
+	a{
+		color: black;
+		text-align: center;
+		display: inherit;
+		font-size: 1.4em;
+	}
+}
+// The event's location.
+.bpt-calendar-widget-event-view-location,
+// The event's date
+.bpt-calendar-widget-event-view-date{
+	line-height: 1em;
+	margin: 9px 0;
+	font-size: .9em;
+}
+
+// Event Page:
+// hack to override the default style
+#override{
+	.bpt-event{
+		@include fancyborder-container(top, #477147);
+	}
+
+	// The title of the event
+	h2.bpt-event-title {
+		text-align: center;
+		margin: 0 0 0.9em;
+	}
+
+	// The event location box.
+	div.bpt-event-location {
+		display: none;
+	}
+
+	// The short description box.
+	div.bpt-event-short-description	{}
+
+	// The full description box.
+	.bpt-event-short-description ~ p{
+		text-align: center;
+	}
+	div.bpt-event-full-description	{}
+
+	// The date selection dropdown.
+	select.bpt-date-select	{}
+
+	// The price listing table.
+	table.bpt-event-list-prices	{}
+
+	// The price's name.
+	td.bpt-price-name	{}
+
+	// The price's value.
+	td.bpt-price-value	{}
+
+	// The price quantity drop down.
+	select.bpt-shipping-qty	{}
+
+	// The delivery method label.
+	label.bpt-shipping-method	{}
+
+	// The delivery method dropdown.
+	select.bpt-shipping-method	{}
+
+	// The delivery country label.
+	label.bpt-shipping-country	{}
+
+	// The delivery country dropdown.
+	select.bpt-shipping-country	{}
+
+	// The add to cart box.
+	div.bpt-add-to-cart	{}
+
+	// The credit card logo section.
+	span.bpt-cc-logos {}
+
+	// The "Add to Cart" button.
+	button.bpt-submit {}
+
+	// The powered by box.
+	div.bpt-powered-by{
+		display: none;
+	}
+}
