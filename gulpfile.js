@@ -8,6 +8,7 @@ var flatten      = require('gulp-flatten');
 var gulp         = require('gulp');
 var gulpif       = require('gulp-if');
 var imagemin     = require('gulp-imagemin');
+var pngquant     = require('imagemin-pngquant');
 var jshint       = require('gulp-jshint');
 var lazypipe     = require('lazypipe');
 var less         = require('gulp-less');
@@ -57,11 +58,7 @@ var enabled = {
   // Disable source maps when `--production`
   maps: !argv.production,
   // Fail styles task on error when `--production`
-  failStyleTask: argv.production,
-  // Fail due to JSHint warnings only when `--production`
-  failJSHint: argv.production,
-  // Strip debug statments from javascript when `--production`
-  stripJSDebug: argv.production
+  failStyleTask: argv.production
 };
 
 // Path to the compiled assets manifest in the dist directory
@@ -107,17 +104,17 @@ var cssTasks = function(filename) {
         'opera 12'
       ]
     })
+
     .pipe(minifyCss, {
       advanced: false,
       rebase: false
     })
+
     .pipe(function() {
       return gulpif(enabled.rev, rev());
     })
     .pipe(function() {
-      return gulpif(enabled.maps, sourcemaps.write('.', {
-        sourceRoot: 'assets/styles/'
-      }));
+      return gulpif(enabled.maps, sourcemaps.write('.'));
     })();
 };
 
@@ -134,18 +131,12 @@ var jsTasks = function(filename) {
       return gulpif(enabled.maps, sourcemaps.init());
     })
     .pipe(concat, filename)
-    .pipe(uglify, {
-      compress: {
-        'drop_debugger': enabled.stripJSDebug
-      }
-    })
+    .pipe(uglify)
     .pipe(function() {
       return gulpif(enabled.rev, rev());
     })
     .pipe(function() {
-      return gulpif(enabled.maps, sourcemaps.write('.', {
-        sourceRoot: 'assets/scripts/'
-      }));
+      return gulpif(enabled.maps, sourcemaps.write('.'));
     })();
 };
 
@@ -219,7 +210,8 @@ gulp.task('images', function() {
     .pipe(imagemin({
       progressive: true,
       interlaced: true,
-      svgoPlugins: [{removeUnknownsAndDefaults: false}, {cleanupIDs: false}]
+      svgoPlugins: [{removeUnknownsAndDefaults: false}, {cleanupIDs: false}],
+      use: [pngquant()]
     }))
     .pipe(gulp.dest(path.dist + 'images'))
     .pipe(browserSync.stream());
@@ -233,7 +225,7 @@ gulp.task('jshint', function() {
   ].concat(project.js))
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(gulpif(enabled.failJSHint, jshint.reporter('fail')));
+    .pipe(jshint.reporter('fail'));
 });
 
 // ### Clean

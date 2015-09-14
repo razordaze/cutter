@@ -19,6 +19,35 @@
     'common': {
       init: function() {
         // JavaScript to be fired on all pages
+        var waitForFinalEvent = (function () {
+            var timers = {};
+            return function (callback, ms, uniqueId) {
+              if (!uniqueId) {
+                uniqueId = "Don't call this twice without a uniqueId";
+              }
+              if (timers[uniqueId]) {
+                clearTimeout (timers[uniqueId]);
+              }
+              timers[uniqueId] = setTimeout(callback, ms);
+            };
+          })();
+        // slide toggle the thing after an .expansive element gets clicked
+        $(document).ready(function(){
+          $(".expansive").click(function(){
+              $(this).next().slideToggle();
+              $(this).toggleClass("open");
+          });
+        // nav mouseover -> header bottom border color switch + swap back otherwise
+          $(".drawer").data("originalColor",$(this).css("background-color"));
+
+          $("#top-nav-primary a").hover(function(){ // over
+            $(".drawer").css("borderBottomColor",$(this).css("background-color"));
+            $(".drawer").css("background-color",$(this).css("background-color"));
+          }, function(){ // out
+            $(".drawer").css("borderBottomColor",$(this).data("originalColor"));
+            $(".drawer").css("background-color",$(this).data("originalColor"));
+          });
+        });
       },
       finalize: function() {
         // JavaScript to be fired on all pages, after page specific JS is fired

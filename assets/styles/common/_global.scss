@@ -1,1 +1,281 @@
+// jQuery / JS stuff:
+// expanding section titles:
+%arrow{
+    color: emphasize($base-font-color);
+    font-family: fontello;
+    margin-left: .9em;
+}
+.expansive {
+    cursor: pointer;
+    // while open arrow up next to child
+    &.open>*:after {
+        @extend %arrow;
+        content: "8";}
+    // while closed arrow down next to child
+    &:not(.open) {
+        &>*:after {
+            @extend %arrow;
+            content: "2";}
+        // if not open, initially hide element next to closed title
+        &+ * {
+            display: none;
+        }
+    }
+}
 
+
+
+html {
+    color: $base-font-color;
+    font-size: $base-font-size;
+    line-height: $base-line-height;
+    overflow-y: scroll;
+}
+
+::selection {
+    background: lighten($color-trim,20%);
+    color: darken($color-trim,20%);
+    text-decoration: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc; 
+    color: #000;
+    padding: 0.2em 0;
+}
+
+
+/* ===== Initializr Styles ==================================================
+   Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
+   ========================================================================== */
+
+html, body{
+    height: 100%;
+}
+
+body {
+    position: relative;
+    font: $base-font-size $base-font-family;
+    line-height: $base-line-height;
+    background: {
+        color: $color-header;
+        image: background-texture($color-header);
+    }
+    color: contrast-txt($color-back);
+}
+
+.wrap {
+    width: 90%;
+    margin: 0 5%;
+    @media only screen and (min-width: $view-maximum) { // Maximal Width
+        width: 1026px; /* 1140px - 10% for margins */
+        margin: 0 auto;
+    }
+}
+
+/* ===================
+    ALL: Base Theme
+   =================== */
+
+@mixin container {
+    border: {
+        style: solid;
+        color: $color-trim;
+    }
+}
+
+.main-container{
+    background: $color-back;
+    padding-bottom: 20px;
+}
+
+.footer-container{
+    @include container;
+    @include fancyborder-container(top);
+}
+
+.front-page-heading{
+    text-align: center;
+}
+
+/* ==============
+    MOBILE: Main
+   ============== */
+
+.main {
+    padding: 30px 0;
+    h1 {font-size: 2em;}
+    @media only screen and (min-width: $view-wide) {
+        float: left;
+        max-width: 57%; // override the grid...
+    }
+}
+
+.footer-container footer {
+    color: contrast-txt($color-footer);
+    padding: 20px 0;
+}
+
+/* ===============
+    ALL: IE Fixes
+   =============== */
+
+.ie7 .brand {
+    padding-top: 20px;
+}
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: $view-intermediate) {
+
+/* ========================
+    INTERMEDIATE: IE Fixes
+   ======================== */
+
+    .menu-primary-container ul li {
+        display: inline;
+    }
+
+    .oldie nav a {
+        margin: 0 0.7%;
+    }
+}
+
+/* ==========================   Helper classes   ============================ */
+
+    .hidden {
+        display: none !important;
+        visibility: hidden;
+    }
+
+    .visuallyhidden {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .visuallyhidden.focusable:active,
+    .visuallyhidden.focusable:focus {
+        clip: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        position: static;
+        width: auto;
+    }
+
+    .invisible {
+        visibility: hidden;
+    }
+
+    .clearfix:before,
+    .clearfix:after {
+        content: " ";
+        display: table;
+    }
+
+    .clearfix:after {
+        clear: both;
+    }
+
+    .clearfix {
+        *zoom: 1;
+    }
+
+/* ==========================   Print styles     ============================ */
+
+    @media print {
+        *,
+        *:before,
+        *:after {
+            background: transparent !important;
+            color: #000 !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+
+        a,
+        a:visited {
+            text-decoration: underline;
+        }
+
+        a[href]:after {
+            content: " (" attr(href) ")";
+        }
+
+        abbr[title]:after {
+            content: " (" attr(title) ")";
+        }
+
+        a[href^="#"]:after,
+        a[href^="javascript:"]:after {
+            content: "";
+        }
+
+        pre,
+        blockquote {
+            border: 1px solid #999;
+            page-break-inside: avoid;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tr,
+        img {
+            page-break-inside: avoid;
+        }
+
+        img {
+            max-width: 100% !important;
+        }
+
+        p,
+        h2,
+        h3 {
+            orphans: 3;
+            widows: 3;
+        }
+
+        h2,
+        h3 {
+            page-break-after: avoid;
+        }
+    }

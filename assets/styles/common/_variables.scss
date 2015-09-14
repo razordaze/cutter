@@ -1,9 +1,90 @@
-// Glyphicons font path
-$icon-font-path:        "../fonts/";
+// Resource Paths
+$path-font:				"../fonts";
+$path-img:				"../images";
 
 // Grid settings
-$main-sm-columns:       12;
-$sidebar-sm-columns:    4;
+$grid-columns:			14;
+$main-sm-columns:       8;
+$sidebar-sm-columns:    5.18;
 
-// Colors
-$brand-primary:         #27ae60;
+// Media Views
+$view-intermediate: 480px; // $screen-sm-min
+$view-wide: 911px; // $screen-md-min
+$view-maximum: 1140px; // $screen-lg-min
+
+
+// Typography
+$base-font-family: 'Libertine', serif;
+$heading-font-family: 'Trajan Pro', Arial;
+$icon-font: 'fontello';
+
+// Weights
+$light: 100;
+$regular: 400;
+$bold: 600;
+$base-font-weight: $regular;
+$heading-font-weight: $bold;
+
+// Font sizes
+$base-font-size: 1em;
+
+// Line height
+$base-line-height: 1.8;
+$heading-line-height: 1.2;
+
+// Other sizes:
+$base-border-radius: 0px;
+$base-spacing: $base-line-height * 1em;
+$small-spacing: $base-spacing / 2;
+$base-z-index: 0;
+
+// Look & feel
+$logo: url("#{$path-img}/logo-frost.png");
+$overlay-dark: url('#{$path-img}/curtain.png'); 	// overlay for dark background colors
+$overlay-light: $overlay-dark; 						// overlay for light background colors
+
+$color-header: #477147;
+$color-background: #fff;
+$color-aside: #195319;
+$color-trim: desaturate(lighten($color-aside,30%),48%);//darken(desaturate($color-header, 90%),10%);
+$color-footer: $color-header;
+$color-back: #fff;
+$color-shadow: #aaa;
+$color-primary: #3e713e;
+$thin-border: lighten($color-trim, 20%);
+$thick-border: #aaa;
+$nav-palette: palette($color-aside);
+
+
+// Font colors
+$base-font-color: #222;
+$action-color: contrast-txt($color-background);
+$sidebar-font-color: contrast-txt($color-aside);
+
+// Borders
+$thin-border: 1px;
+$color-thin-border: lighten($color-trim, 20%);
+
+
+// Artefacts:
+$brand-primary: $color-primary;
+$icon-font-path: $path-font+"/";
+$medium-screen: $view-intermediate;
+$line-height-base: $base-line-height;
+$font-size-base: $base-font-size;
+$line-height-computed: floor(($font-size-base * $line-height-base)) !default; // ~20px
+
+//== Thumbnails
+//** Padding around the thumbnail image
+$thumbnail-padding:           4px !default;
+//** Thumbnail background color
+$thumbnail-bg:                $color-background !default;
+//** Thumbnail border color
+$thumbnail-border:            #ddd !default;
+//** Thumbnail border radius
+$thumbnail-border-radius:     $base-border-radius !default;
+
+//** Custom text color for thumbnail captions
+$thumbnail-caption-color:     $base-font-color !default;
+//** Padding around the thumbnail caption
+$thumbnail-caption-padding:   9px !default;

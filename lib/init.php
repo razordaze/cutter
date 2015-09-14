@@ -19,7 +19,8 @@ function setup() {
   // Register wp_nav_menu() menus
   // http://codex.wordpress.org/Function_Reference/register_nav_menus
   register_nav_menus([
-    'primary_navigation' => __('Primary Navigation', 'sage')
+    'primary_navigation' => __('Primary Navigation', 'sage'),
+    'social_links' => __('Social Links', 'sage')
   ]);
 
   // Add post thumbnails
@@ -50,8 +51,8 @@ function widgets_init() {
     'id'            => 'sidebar-primary',
     'before_widget' => '<section class="widget %1$s %2$s">',
     'after_widget'  => '</section>',
-    'before_title'  => '<h3>',
-    'after_title'   => '</h3>'
+    'before_title'  => '<span class="bookend"><h3>',
+    'after_title'   => '</h3></span>'
   ]);
 
   register_sidebar([

@@ -1,0 +1,71 @@
+// Mixins 
+@mixin bookend($side){
+	$edge: '[ ';
+	@if $side == right { $edge: ' ]';}
+	font:{
+		family: $icon-font;
+		size: 2em;
+		weight: normal;
+	}
+    content: $edge;
+    @media only screen and (min-width: $view-wide) {
+		font-size: 1.4em;
+	}
+}
+
+// Base
+.sidebar a{
+	color: emphasize($sidebar-font-color);
+}
+
+.sidebar section {
+    color: $sidebar-font-color;
+	padding: $small-spacing 5%;
+	input{
+		width: 98%;
+	}
+}
+// take bookends out for mobile. 
+.bookend{
+	text-align:center;
+	width:100%;
+	display: inline-block;	    
+	@media only screen and (min-width: $view-intermediate) {
+		&:before{
+		    @include bookend(left);
+	    }
+	    &:after{
+	        @include bookend(right);
+	    }
+		h3{
+		  	text-align: center;
+		  	display: inline-block;
+		  	max-width: 60%;
+		}
+	}
+}
+
+
+.main + aside section {
+    background: $color-aside;
+    background-image: background-texture($color-aside);
+    margin-top: 1.5em;
+    @include fancyborder-container(top);
+    h2 {
+        text-align: center;
+    }
+    @media only screen and (min-width: $view-wide) {
+        box-shadow: $color-shadow 0px 5px 10px;
+    }
+}
+
+
+// Wide
+.sidebar {
+    float: right;
+    width: 100%;
+    @media only screen and (min-width: $view-wide) {
+		h3{ font-size: 1.1em;}
+        width: floor(percentage(($sidebar-sm-columns / $grid-columns)));
+    }
+}

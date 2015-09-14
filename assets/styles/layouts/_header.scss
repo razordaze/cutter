@@ -1,0 +1,264 @@
+@mixin menu { // Used for nav, and contact
+    text-align: center;
+    text-decoration: none;
+    font-weight: $bold;
+    font-family: $heading-font-family;
+    display: block;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+
+// Containers
+.header-container{
+    @include container;
+    border:0;
+}
+.menu-social-container{
+    position: relative;
+    //z-index: 100;
+}
+
+// Drawer
+.drawer{
+    position: relative;
+    margin-bottom: -5px;
+    background-color: #7b8a7b;
+    border-bottom: 20px solid #7b8a7b;
+    @media only screen and (min-width: $view-intermediate) {
+        border-top: 5px double #b1bab1;
+        top: -5px;
+    }
+    @media only screen and (min-width: $view-wide) { 
+        box-shadow: #aaa 0 5px 10px;
+    }
+}
+
+// Branding / Title
+
+.brand {
+    color: contrast-txt($color-header);
+    background-image: $logo;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-position: center;
+    height: 138px;
+    margin: 20px 0;
+    position:relative;
+    display: inherit;
+    //z-index: 100;
+    @media only screen and (min-width: $view-wide) {
+        float: left;
+        margin-left: 18%;
+        width: 260px;
+    }
+}
+
+
+// ==========================================================================
+//   Navigation Bar
+// ==========================================================================
+
+// Menu Tab Styles, using nav-palette colors
+@for $i from 1 to (length($nav-palette)){
+  .menu-tab-#{$i}{
+    background: map-get($nav-palette,$i);
+    color: contrast-txt(map-get($nav-palette,$i));
+    border-bottom-color: map-get($nav-palette,$i);
+    opacity: 1;
+  }
+}
+
+#top-nav-primary {
+    @media only screen and (min-width: $view-wide) {
+        float: right;
+        width: floor(percentage(($sidebar-sm-columns / $grid-columns)));
+    }
+    position: relative;
+    z-index: 1;
+    text-align: center;
+
+  /* Main menu items */
+  li {
+    position: relative;
+    border-bottom-style: hidden; 
+    // no outer margin on the edge tabs
+    &:first-child { margin-right: 0;}
+    &:last-child  { margin-left: 0;}
+    
+    @media only screen and (min-width: $view-intermediate) {
+        float: right;
+        display: inline-block;
+        width: 29%;
+        margin: 0 2.5%;
+    }
+
+    // Basic Menu Mixin Goodness
+    a {
+      @include menu;        
+      color: contrast-txt($color-thin-border);
+      background: $color-thin-border;
+      width: 100%;
+      @media only screen and (min-width: $view-intermediate) {
+            font-size: 16px;
+            float: right;
+            padding: 12px 0;
+            margin-bottom: 0;
+            color: contrast-txt($color-trim);
+            background: $color-trim;
+            @include fancyborder;
+      }
+    }
+
+      /* Hide sub menus & sub-sub menus
+      * Position *underneath* originating li (see ul ul below) */
+    ul, ul ul {
+      display: none;
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      &.sub-menu li a, &.sub-menu li:hover, &.sub-menu li:hover > a{
+        border: 0;
+      }
+    }
+
+      /* Position sub-subs to right of parent li */
+    ul ul {
+      left:100%;
+      top: 0;
+    }
+
+      /* Make sub & sub-sub li's fill parent ul
+      * Add feint border to bottom to separate items */
+    li {
+      display: block;
+    }
+  }
+
+  // sizing the sub menus...
+  .sub-menu{      
+      @media only screen and (min-width: $view-intermediate) {
+        left: -10px;
+        padding: 0 5px;
+      }    
+      @media only screen and (min-width: $view-wide) {
+        width: 120%;
+        left: -15%;
+        padding: 0;
+      }
+    li{
+        float: none;
+        display: list-item;
+        width: 100%;
+        margin: 0;
+    }
+  }
+
+  /* Highlight li on hover */
+  /* Change anchor colour to highlighted text */
+  li {        
+    @for $i from 1 to (length($nav-palette)){
+      &:nth-child(#{$i}){
+          &:hover a, & a:active, & a:focus, ul li a, ul {
+            @extend .menu-tab-#{$i};
+      }}
+    }
+
+    /* Display subs and sub-subs on parent hover */
+    &:hover > ul, a:active ~ ul, a:focus ~ ul {
+      display: block;
+    }
+  }
+
+  /* Don't display menus further than 3 deep in ul tree */
+  ul ul ul li:hover ul {
+    display: none;
+  }
+
+  /* Make sure no padding & margins round <ul>s.
+   * Very likely to have been set in CSS for rest of site */
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+}
+
+
+@mixin menu { // Used for nav, and contact
+    text-align: center;
+    text-decoration: none;
+    font-weight: $bold;
+    font-family: $heading-font-family;
+
+    display: block;
+    padding: 15px 0;
+    margin-bottom: 10px; // useless? not used by contact, breaks big menus.
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// ==========================================================================
+//   Contact Ribbon (tablet / pc) & Bar (mobile)
+// ==========================================================================
+
+.contact{
+  text-align: center;
+  background: $color-aside;
+  a{ 
+      @include menu;
+      color: contrast-txt($color-aside);
+      font-size: 16px;
+      &:active, &:focus, &:hover{
+      color: contrast-txt($color-background);
+    }
+  }
+  &:active, &:focus, &:hover{
+    background-color: $color-background;
+  }
+
+  @media only screen and (min-width: $view-intermediate){
+    position: absolute;
+    //z-index: 200;
+    top: -10px;
+    width: 121px;
+    padding-top: 12px;
+    -webkit-box-shadow: black 0 18px 40px -10px;
+    box-shadow: black 0 18px 40px -10px;
+    &:active, &:focus, &:hover{
+      top:0;
+      background-color: $color-aside;
+    }
+    a{
+      padding: 0;
+      margin:0;
+      &:active, &:focus, &:hover{
+      color: contrast-txt($color-aside);
+        opacity: 1;
+      }
+    }
+    & span:after{
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 40.4px;
+      border: {
+          width: 60.4px;
+          style: solid;
+          color: $color-aside;
+          top: 0;
+          bottom: 15px solid rgba(0,0,0,0);
+      }
+    }
+  }
+}
+
+.main-containter div.container {
+  padding-bottom: 25px;
+}

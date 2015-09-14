@@ -3,3 +3,12 @@
 body {
   margin: 12px !important;
 }
+body.wp-editor{
+	background:{
+		color: #fff;
+		image: none;
+	}
+}
+body#tinymce {
+	max-height: 450px;
+}
