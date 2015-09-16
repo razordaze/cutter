@@ -8,5 +8,10 @@
   "private": true,
   "dependencies": {
     "modernizr": "2.8.2"
+  },
+  "overrides": {
+    "modernizr": {
+      "main": "modernizr.js"
+    }
   }
 }
