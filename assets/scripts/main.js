@@ -38,14 +38,14 @@
               $(this).toggleClass("open");
           });
         // nav mouseover -> header bottom border color switch + swap back otherwise
-          $(".drawer").data("originalColor",$(this).css("background-color"));
+          $(".drawer").data("originalColor",$(".drawer").css("background-color"));
 
           $("#top-nav-primary a").hover(function(){ // over
             $(".drawer").css("borderBottomColor",$(this).css("background-color"));
             $(".drawer").css("background-color",$(this).css("background-color"));
           }, function(){ // out
-            $(".drawer").css("borderBottomColor",$(this).data("originalColor"));
-            $(".drawer").css("background-color",$(this).data("originalColor"));
+            $(".drawer").css("borderBottomColor",$(".drawer").data("originalColor"));
+            $(".drawer").css("background-color",$(".drawer").data("originalColor"));
           });
         });
       },
